@@ -1,0 +1,6 @@
+package be.hackinthewoods.childfocus.backend.service;
+
+public interface UserService {
+
+    String login(String username, String password);
+}
