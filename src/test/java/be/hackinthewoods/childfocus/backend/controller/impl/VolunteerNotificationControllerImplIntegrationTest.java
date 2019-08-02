@@ -36,6 +36,18 @@ public class VolunteerNotificationControllerImplIntegrationTest {
 
     @Test
     @WithAnonymousUser
+    public void subscribe_unauthorized() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(Arrays.asList("token1", "token2"));
+
+        mockMvc.perform(post("/api/missions/subscribe")
+          .contentType(MediaType.APPLICATION_JSON_UTF8)
+          .content(json)
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
     public void subscribe() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(Arrays.asList("token1", "token2"));
