@@ -2,13 +2,13 @@ package be.hackinthewoods.childfocus.backend.service.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.repository.MissionRepository;
-import be.hackinthewoods.childfocus.backend.service.BroadcastService;
-import be.hackinthewoods.childfocus.backend.service.MissionPayLoadConverter;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
 
+@Service
 public class VolunteerNotificationServiceImpl implements VolunteerNotificationService {
 
     private final MissionRepository missionRepository;

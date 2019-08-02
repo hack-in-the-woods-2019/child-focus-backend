@@ -1,6 +1,6 @@
 package be.hackinthewoods.childfocus.backend.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,16 +11,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
+@ComponentScan(basePackageClasses = SecurityConfiguration.class)
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Autowired
     private CustomUrlAuthentificationSuccessHandler successHandler;
+    private SimpleUrlAuthenticationFailureHandler failureHandler;
 
-    private SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+    public SecurityConfiguration(
+      RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+      CustomUrlAuthentificationSuccessHandler successHandler) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.successHandler = successHandler;
+        this.failureHandler = new SimpleUrlAuthenticationFailureHandler();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -41,18 +46,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+
+                .and().authorizeRequests()
+                .antMatchers("/api/missions/subscribe").permitAll()
+                .anyRequest().authenticated()
+
                 .and()
                 .formLogin()
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
+
                 .and()
                 .httpBasic()
-                .and()
-                .logout();
+                .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 }
