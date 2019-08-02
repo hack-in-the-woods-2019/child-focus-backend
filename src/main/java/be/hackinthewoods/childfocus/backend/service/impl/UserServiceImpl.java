@@ -3,11 +3,13 @@ package be.hackinthewoods.childfocus.backend.service.impl;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.repository.UserRepository;
 import be.hackinthewoods.childfocus.backend.service.UserService;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

@@ -1,4 +1,4 @@
-package be.hackinthewoods.childfocus.backend.service;
+package be.hackinthewoods.childfocus.backend.service.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.CustomUserDetails;
 import be.hackinthewoods.childfocus.backend.repository.UserRepository;
