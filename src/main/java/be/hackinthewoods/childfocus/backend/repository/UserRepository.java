@@ -1,6 +1,6 @@
-package be.example.springbootbase.repository;
+package be.hackinthewoods.childfocus.backend.repository;
 
-import be.example.springbootbase.entity.WebUser;
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

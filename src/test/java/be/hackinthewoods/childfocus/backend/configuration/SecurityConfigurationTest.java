@@ -1,4 +1,4 @@
-package be.example.springbootbase.configuration;
+package be.hackinthewoods.childfocus.backend.configuration;
 
 import org.junit.Before;
 import org.junit.Test;

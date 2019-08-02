@@ -1,4 +1,4 @@
-package be.example.springbootbase;
+package be.hackinthewoods.childfocus.backend;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,4 +1,4 @@
-package be.example.springbootbase;
+package be.hackinthewoods.childfocus.backend;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package be.example.springbootbase.configuration;
+package be.hackinthewoods.childfocus.backend.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

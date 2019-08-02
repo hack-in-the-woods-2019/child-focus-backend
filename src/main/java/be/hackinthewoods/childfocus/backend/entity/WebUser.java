@@ -1,4 +1,4 @@
-package be.example.springbootbase.entity;
+package be.hackinthewoods.childfocus.backend.entity;
 
 import javax.persistence.*;
 import java.util.Set;

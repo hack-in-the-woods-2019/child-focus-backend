@@ -1,7 +1,7 @@
-package be.example.springbootbase.service;
+package be.hackinthewoods.childfocus.backend.service;
 
-import be.example.springbootbase.entity.CustomUserDetails;
-import be.example.springbootbase.repository.UserRepository;
+import be.hackinthewoods.childfocus.backend.entity.CustomUserDetails;
+import be.hackinthewoods.childfocus.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

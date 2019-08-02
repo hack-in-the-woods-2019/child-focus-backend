@@ -1,4 +1,4 @@
-package be.example.springbootbase.entity;
+package be.hackinthewoods.childfocus.backend.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
