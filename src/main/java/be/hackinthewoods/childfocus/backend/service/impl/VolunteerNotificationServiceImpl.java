@@ -12,21 +12,16 @@ import java.util.List;
 public class VolunteerNotificationServiceImpl implements VolunteerNotificationService {
 
     private final MissionRepository missionRepository;
-    private final BroadcastService broadcastService;
 
-    VolunteerNotificationServiceImpl(MissionRepository missionRepository, BroadcastService broadcastService) {
+    VolunteerNotificationServiceImpl(MissionRepository missionRepository) {
         this.missionRepository = missionRepository;
-        this.broadcastService = broadcastService;
     }
 
     @Override
-    public void sendMissions(List<Mission> missions) {
+    public void saveMissions(List<Mission> missions) {
         Assert.notNull(missions, "The missions mustn't be null");
         Assert.isTrue(missions.stream().allMatch(m -> m.getStatus().equals(Mission.Status.PENDING)), "The missions must be pending");
         missionRepository.saveAll(missions);
-        missions.stream()
-          .map(MissionPayLoadConverter::convert)
-          .forEach(payLoad -> broadcastService.broadcast(payLoad, null));
     }
 
     @Override

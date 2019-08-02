@@ -24,32 +24,30 @@ public class VolunteerNotificationServiceImplTest {
     private VolunteerNotificationService service;
 
     @Mock
-    private BroadcastService broadcastService;
-    @Mock
     private MissionRepository missionRepository;
 
     @Before
     public void beforeEach() {
-        service = new VolunteerNotificationServiceImpl(missionRepository, broadcastService);
+        service = new VolunteerNotificationServiceImpl(missionRepository);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void sendMissions_nullMissions() {
-        service.sendMissions(null);
+    public void saveMissions_nullMissions() {
+        service.saveMissions(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void sendMissions_nonPendingMissions() {
+    public void saveMissions_nonPendingMissions() {
         Mission mission1 = new Mission();
         mission1.setStatus(PENDING);
         Mission mission2 = new Mission();
         mission2.setStatus(ACCEPTED);
 
-        service.sendMissions(Arrays.asList(mission1, mission2));
+        service.saveMissions(Arrays.asList(mission1, mission2));
     }
 
     @Test
-    public void sendMissions() {
+    public void saveMissions() {
         Mission mission1 = new Mission();
         mission1.setId(1L);
         mission1.setStatus(PENDING);
@@ -58,17 +56,9 @@ public class VolunteerNotificationServiceImplTest {
         mission2.setStatus(PENDING);
         List<Mission> missions = Arrays.asList(mission1, mission2);
 
-        service.sendMissions(missions);
+        service.saveMissions(missions);
 
         verify(missionRepository).saveAll(missions);
-        verify(broadcastService).broadcast(Map.of(
-          "id", "1",
-          "status", "PENDING"
-        ), null);
-        verify(broadcastService).broadcast(Map.of(
-          "id", "2",
-          "status", "PENDING"
-        ), null);
     }
 
     @Test(expected = IllegalArgumentException.class)

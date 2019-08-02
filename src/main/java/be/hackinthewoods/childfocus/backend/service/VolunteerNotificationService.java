@@ -11,7 +11,7 @@ public interface VolunteerNotificationService {
      * @throws IllegalArgumentException when {@code missions} is {@code null}
      * @throws IllegalArgumentException when any {@code mission} is not pending
      */
-    void sendMissions(List<Mission> missions);
+    void saveMissions(List<Mission> missions);
 
     /**
      * The user answers a mission
