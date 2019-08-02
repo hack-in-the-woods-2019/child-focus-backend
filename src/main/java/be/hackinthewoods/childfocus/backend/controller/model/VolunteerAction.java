@@ -1,4 +1,4 @@
-package be.hackinthewoods.childfocus.backend.ws.model;
+package be.hackinthewoods.childfocus.backend.controller.model;
 
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 import org.springframework.util.Assert;

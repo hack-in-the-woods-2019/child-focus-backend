@@ -1,9 +1,9 @@
-package be.hackinthewoods.childfocus.backend.ws.impl;
+package be.hackinthewoods.childfocus.backend.controller.impl;
 
+import be.hackinthewoods.childfocus.backend.controller.VolunteerActionController;
+import be.hackinthewoods.childfocus.backend.controller.model.VolunteerAction;
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 import be.hackinthewoods.childfocus.backend.service.VolunteerActionService;
-import be.hackinthewoods.childfocus.backend.ws.VolunteerActionController;
-import be.hackinthewoods.childfocus.backend.ws.model.VolunteerAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

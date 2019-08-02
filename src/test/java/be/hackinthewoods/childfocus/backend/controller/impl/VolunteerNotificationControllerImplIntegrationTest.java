@@ -1,4 +1,4 @@
-package be.hackinthewoods.childfocus.backend.ws.impl;
+package be.hackinthewoods.childfocus.backend.controller.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
@@ -17,7 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.*;
+import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
+import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

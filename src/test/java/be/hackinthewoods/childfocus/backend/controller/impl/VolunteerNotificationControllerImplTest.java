@@ -1,9 +1,9 @@
-package be.hackinthewoods.childfocus.backend.ws.impl;
+package be.hackinthewoods.childfocus.backend.controller.impl;
 
+import be.hackinthewoods.childfocus.backend.controller.VolunteerNotificationController;
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
-import be.hackinthewoods.childfocus.backend.ws.VolunteerNotificationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

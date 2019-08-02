@@ -1,8 +1,8 @@
-package be.hackinthewoods.childfocus.backend.ws.impl;
+package be.hackinthewoods.childfocus.backend.controller.impl;
 
+import be.hackinthewoods.childfocus.backend.controller.VolunteerActionController;
+import be.hackinthewoods.childfocus.backend.controller.model.VolunteerAction;
 import be.hackinthewoods.childfocus.backend.service.VolunteerActionService;
-import be.hackinthewoods.childfocus.backend.ws.VolunteerActionController;
-import be.hackinthewoods.childfocus.backend.ws.model.VolunteerAction;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
