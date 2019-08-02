@@ -3,10 +3,12 @@ package be.hackinthewoods.childfocus.backend.ws.impl;
 import be.hackinthewoods.childfocus.backend.service.VolunteerActionService;
 import be.hackinthewoods.childfocus.backend.ws.VolunteerActionController;
 import be.hackinthewoods.childfocus.backend.ws.model.VolunteerAction;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Service
+@RestController
 public class VolunteerActionControllerImpl implements VolunteerActionController {
 
     private final VolunteerActionService service;
@@ -16,7 +18,8 @@ public class VolunteerActionControllerImpl implements VolunteerActionController 
     }
 
     @Override
-    public void action(VolunteerAction action) {
+    @PostMapping(path = "/api/actions")
+    public void action(@RequestBody VolunteerAction action) {
         Assert.notNull(action, "The action mustn't be null");
         switch (action.getType()) {
             case PUT:
