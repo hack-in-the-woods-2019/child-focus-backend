@@ -1,10 +1,12 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.util.Objects;
 
+@Entity
 public class Mission {
     @Id
     @GeneratedValue

@@ -1,6 +1,8 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +11,11 @@ import java.util.Objects;
 
 @Entity
 public class Poster {
-    @ManyToOne
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne(targetEntity = DisplayLocation.class)
     private List<DisplayLocation> displayLocations = new ArrayList<>();
 
     public Poster() {
