@@ -8,7 +8,7 @@ public class Role {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToMany(mappedBy = "roles")
     private Set<WebUser> webUsers;

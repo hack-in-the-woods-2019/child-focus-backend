@@ -1,6 +1,5 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +9,7 @@ import java.util.Objects;
 public class Address {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String street;
     private String houseNumber;
@@ -20,7 +19,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(long id, String street, String houseNumber, String postalCode, String city, Coordinate coordinate) {
+    public Address(Long id, String street, String houseNumber, String postalCode, String city, Coordinate coordinate) {
         this.id = id;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -28,11 +27,11 @@ public class Address {
         this.city = city;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,7 +72,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return id == address.id &&
+        return id.equals(address.id) &&
                 street.equals(address.street) &&
                 houseNumber.equals(address.houseNumber) &&
                 postalCode.equals(address.postalCode) &&

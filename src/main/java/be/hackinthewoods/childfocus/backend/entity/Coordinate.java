@@ -3,18 +3,27 @@ package be.hackinthewoods.childfocus.backend.entity;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 public class Coordinate {
-    BigDecimal latitude;
-    BigDecimal longitude;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
     @Nullable
     @OneToOne
     private Address address;
+
+    public Coordinate() {
+    }
 
     public Coordinate(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = latitude;
@@ -42,13 +51,15 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return latitude.equals(that.latitude) &&
-                longitude.equals(that.longitude);
+        return id.equals(that.id) &&
+                latitude.equals(that.latitude) &&
+                longitude.equals(that.longitude) &&
+                Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(latitude, longitude);
+        return Objects.hash(id, latitude, longitude, address);
     }
 
     @Override

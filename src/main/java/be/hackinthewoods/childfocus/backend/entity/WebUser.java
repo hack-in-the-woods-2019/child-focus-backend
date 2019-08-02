@@ -8,7 +8,7 @@ public class WebUser {
 
     @Id
     @GeneratedValue
-    public long id;
+    public Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
