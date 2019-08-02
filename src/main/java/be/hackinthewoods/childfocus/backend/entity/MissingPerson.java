@@ -3,7 +3,9 @@ package be.hackinthewoods.childfocus.backend.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +17,9 @@ public class MissingPerson {
     private String firstName;
     private String lastName;
     private byte[] picture;
+
+    @OneToMany
+    private List<MissingPerson> missingPeople;
 
     public MissingPerson() {
     }
@@ -74,5 +79,16 @@ public class MissingPerson {
         int result = Objects.hash(id, firstName, lastName);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MissingPerson{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", picture=" + Arrays.toString(picture) +
+                ", missingPeople=" + missingPeople +
+                '}';
     }
 }
