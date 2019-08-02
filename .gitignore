@@ -56,3 +56,6 @@ build/
 
 ### Maven ###
 .mvn
+
+### Private ###
+/config/

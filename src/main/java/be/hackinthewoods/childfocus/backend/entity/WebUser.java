@@ -8,7 +8,7 @@ public class WebUser {
 
     @Id
     @GeneratedValue
-    public Long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -21,6 +21,14 @@ public class WebUser {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

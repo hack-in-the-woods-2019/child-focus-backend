@@ -18,11 +18,7 @@ public class MissingPerson {
     private String lastName;
     private byte[] picture;
 
-    @OneToMany
-    private List<MissingPerson> missingPeople;
-
-    public MissingPerson() {
-    }
+    public MissingPerson() {}
 
     public MissingPerson(Long id, String firstName, String lastName, byte[] picture) {
         this.id = id;
@@ -88,7 +84,6 @@ public class MissingPerson {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", picture=" + Arrays.toString(picture) +
-                ", missingPeople=" + missingPeople +
                 '}';
     }
 }

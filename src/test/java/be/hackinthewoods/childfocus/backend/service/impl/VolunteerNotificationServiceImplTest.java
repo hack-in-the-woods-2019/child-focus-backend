@@ -2,6 +2,7 @@ package be.hackinthewoods.childfocus.backend.service.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.repository.MissionRepository;
+import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
@@ -22,11 +24,13 @@ public class VolunteerNotificationServiceImplTest {
     private VolunteerNotificationService service;
 
     @Mock
+    private BroadcastService broadcastService;
+    @Mock
     private MissionRepository missionRepository;
 
     @Before
     public void beforeEach() {
-        service = new VolunteerNotificationServiceImpl(missionRepository);
+        service = new VolunteerNotificationServiceImpl(missionRepository, broadcastService);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -47,14 +51,24 @@ public class VolunteerNotificationServiceImplTest {
     @Test
     public void sendMissions() {
         Mission mission1 = new Mission();
+        mission1.setId(1L);
         mission1.setStatus(PENDING);
         Mission mission2 = new Mission();
+        mission2.setId(2L);
         mission2.setStatus(PENDING);
         List<Mission> missions = Arrays.asList(mission1, mission2);
 
         service.sendMissions(missions);
 
         verify(missionRepository).saveAll(missions);
+        verify(broadcastService).broadcast(Map.of(
+          "id", "1",
+          "status", "PENDING"
+        ), null);
+        verify(broadcastService).broadcast(Map.of(
+          "id", "2",
+          "status", "PENDING"
+        ), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
