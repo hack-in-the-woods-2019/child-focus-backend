@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         Assert.hasText(username, "The username mustn't be blank");
         Assert.hasText(password, "The password mustn't be blank");
 
-        Optional<WebUser> user = userRepository.findByUsername(username);
+        Optional<WebUser> user = userRepository.findByUsernameAndPassword(username, password);
         user.ifPresent(u -> u.setToken(UUID.randomUUID().toString()));
         return user.map(WebUser::getToken).orElse("");
     }

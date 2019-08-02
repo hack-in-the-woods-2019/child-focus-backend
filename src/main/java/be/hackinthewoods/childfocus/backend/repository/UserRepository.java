@@ -9,5 +9,7 @@ public interface UserRepository extends JpaRepository<WebUser, Long> {
 
     Optional<WebUser> findByUsername(String username);
 
+    Optional<WebUser> findByUsernameAndPassword(String username, String password);
+
     Optional<WebUser> findByToken(String token);
 }

@@ -42,7 +42,7 @@ public class UserServiceImplTest {
         String username = "username";
         String password = "password";
         WebUser user = new WebUser(username, password);
-        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+        when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.of(user));
 
         String token = service.login(username, password);
 
@@ -54,7 +54,7 @@ public class UserServiceImplTest {
     public void login_userDontExist() {
         String username = "username";
         String password = "password";
-        when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.empty());
 
         String token = service.login(username, password);
 
