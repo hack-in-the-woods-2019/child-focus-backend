@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
@@ -33,6 +34,20 @@ public class VolunteerNotificationControllerImplTest {
           volunteerNotificationService,
           broadcastService
         );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void subscribe_nullClientTokens() {
+        controller.subscribe(null);
+    }
+
+    @Test
+    public void subscribe() {
+        List<String> clientTokens = Arrays.asList("token1", "token2");
+
+        controller.subscribe(clientTokens);
+
+        verify(broadcastService).subscribe(clientTokens, "missions");
     }
 
     @Test(expected = IllegalArgumentException.class)

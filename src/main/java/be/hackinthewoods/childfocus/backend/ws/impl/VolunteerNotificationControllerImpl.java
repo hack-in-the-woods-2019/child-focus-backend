@@ -20,6 +20,12 @@ public class VolunteerNotificationControllerImpl implements VolunteerNotificatio
     }
 
     @Override
+    public void subscribe(List<String> clientTokens) {
+        Assert.notNull(clientTokens, "The client tokens mustn't be null");
+        broadcastService.subscribe(clientTokens, "missions");
+    }
+
+    @Override
     public void send(List<Mission> missions) {
         Assert.notNull(missions, "The missions mustn't be null");
         Assert.isTrue(missions.stream().allMatch(m -> m.getStatus().equals(Mission.Status.PENDING)), "The missions must be pending");

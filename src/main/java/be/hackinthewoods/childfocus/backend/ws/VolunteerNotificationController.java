@@ -7,6 +7,12 @@ import java.util.List;
 public interface VolunteerNotificationController {
 
     /**
+     * Subscribes clients to mission notifications
+     * @throws IllegalArgumentException when {@code clientTokens} is {@code null} or empty
+     */
+    void subscribe(List<String> clientTokens);
+
+    /**
      * Sends missions to volunteers
      * @throws IllegalArgumentException when {@code missions} is {@code null}
      * @throws IllegalArgumentException when any {@code mission} is not pending
