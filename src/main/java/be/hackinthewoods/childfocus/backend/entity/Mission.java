@@ -15,7 +15,7 @@ public class Mission {
     @OneToOne
     private MissingPerson missingPerson;
 
-    private Mission.Status missonAccepted;
+    private Mission.Status status;
 
     public enum Status {
         ACCEPTED,
@@ -26,11 +26,11 @@ public class Mission {
     public Mission() {
     }
 
-    public Mission(Long id, WebUser webUser, MissingPerson missingPerson, Status missonAccepted) {
+    public Mission(Long id, WebUser webUser, MissingPerson missingPerson, Status status) {
         this.id = id;
         this.webUser = webUser;
         this.missingPerson = missingPerson;
-        this.missonAccepted = missonAccepted;
+        this.status = status;
     }
 
     public Long getId() {
@@ -57,12 +57,12 @@ public class Mission {
         this.missingPerson = missingPerson;
     }
 
-    public Status getMissonAccepted() {
-        return missonAccepted;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setMissonAccepted(Status missonAccepted) {
-        this.missonAccepted = missonAccepted;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -73,12 +73,12 @@ public class Mission {
         return id.equals(mission.id) &&
                 webUser.equals(mission.webUser) &&
                 missingPerson.equals(mission.missingPerson) &&
-                missonAccepted == mission.missonAccepted;
+                status == mission.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, webUser, missingPerson, missonAccepted);
+        return Objects.hash(id, webUser, missingPerson, status);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Mission {
                 "id=" + id +
                 ", webUser=" + webUser +
                 ", missingPerson=" + missingPerson +
-                ", missonAccepted=" + missonAccepted +
+                ", missonAccepted=" + status +
                 '}';
     }
 }
