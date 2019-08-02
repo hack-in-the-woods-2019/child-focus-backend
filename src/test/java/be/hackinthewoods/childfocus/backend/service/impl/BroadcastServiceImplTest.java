@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 
@@ -16,6 +17,16 @@ public class BroadcastServiceImplTest {
     @Before
     public void beforeEach() throws Exception {
         broadcastService = new BroadcastServiceImpl("", "");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void subscribe_nullTokens() {
+        broadcastService.subscribe(null, "test-topic");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void subscribe_nullTopic() {
+        broadcastService.subscribe(Collections.singletonList("token"), null);
     }
 
     @Test(expected = IllegalArgumentException.class)

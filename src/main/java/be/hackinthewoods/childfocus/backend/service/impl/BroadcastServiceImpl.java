@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,6 +48,19 @@ public class BroadcastServiceImpl implements BroadcastService {
     }
 
     @Override
+    public void subscribe(List<String> tokens, String topic) {
+        Assert.notNull(tokens, "The tokens musn't be null");
+        Assert.notEmpty(tokens, "The tokens musn't be empty");
+        Assert.notNull(topic, "The topic musn't be null");
+
+        try {
+            FirebaseMessaging.getInstance().subscribeToTopic(tokens, topic);
+        } catch (FirebaseMessagingException e) {
+            throw new IllegalStateException("An error occurred while subscribing to the topic", e);
+        }
+    }
+
+    @Override
     public void broadcast(Map<String, String> payLoad, String topic) {
         Assert.notNull(payLoad, "The pay load mustn't be null");
         Assert.hasText(topic, "The topic mustn't be empty");
@@ -59,7 +73,7 @@ public class BroadcastServiceImpl implements BroadcastService {
         try {
             FirebaseMessaging.getInstance().send(message);
         } catch (FirebaseMessagingException e) {
-            throw new IllegalStateException("Lol?", e);
+            throw new IllegalStateException("An error occurred while sending the message", e);
         }
     }
 }
