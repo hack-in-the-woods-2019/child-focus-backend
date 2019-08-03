@@ -33,17 +33,19 @@ public class BroadcastServiceImpl implements BroadcastService {
 
     @PostConstruct
     void init() {
-        try (FileInputStream serviceAccount = new FileInputStream(firebaseKeyFilePath)) {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-              .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-              .setDatabaseUrl(firebaseUrl)
-              .build();
+        if (FirebaseApp.getApps().isEmpty()) {
+            try (FileInputStream serviceAccount = new FileInputStream(firebaseKeyFilePath)) {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                  .setDatabaseUrl(firebaseUrl)
+                  .build();
 
-            FirebaseApp.initializeApp(options);
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("No firebase key file found at " + firebaseKeyFilePath);
-        } catch (IOException e) {
-            throw new IllegalStateException("An error occurred while reading file " + firebaseKeyFilePath);
+                FirebaseApp.initializeApp(options);
+            } catch (FileNotFoundException e) {
+                throw new IllegalStateException("No firebase key file found at " + firebaseKeyFilePath);
+            } catch (IOException e) {
+                throw new IllegalStateException("An error occurred while reading file " + firebaseKeyFilePath);
+            }
         }
     }
 

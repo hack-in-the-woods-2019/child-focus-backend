@@ -19,12 +19,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String username, String password) {
+    public Optional<String> login(String username, String password) {
         Assert.hasText(username, "The username mustn't be blank");
         Assert.hasText(password, "The password mustn't be blank");
 
         Optional<WebUser> user = userRepository.findByUsernameAndPassword(username, password);
         user.ifPresent(u -> u.setToken(UUID.randomUUID().toString()));
-        return user.map(WebUser::getToken).orElse("");
+        return user.map(WebUser::getToken);
+    }
+
+    @Override
+    public Optional<WebUser> findByToken(String token) {
+        Assert.hasText(token, "The token musn't be blank");
+
+        return userRepository.findByToken(token);
     }
 }

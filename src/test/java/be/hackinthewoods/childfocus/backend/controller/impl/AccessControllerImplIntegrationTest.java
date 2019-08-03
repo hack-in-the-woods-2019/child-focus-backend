@@ -1,23 +1,33 @@
 package be.hackinthewoods.childfocus.backend.controller.impl;
 
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(AccessControllerImpl.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class AccessControllerImplIntegrationTest {
 
     @Autowired
@@ -27,13 +37,13 @@ public class AccessControllerImplIntegrationTest {
     private UserService userService;
 
     @Test
-    public void login() throws Exception {
+    public void getToken() throws Exception {
         String username = "username";
         String password = "password";
-        String token = "token";
+        Optional<String> token = Optional.of("token");
         when(userService.login(username, password)).thenReturn(token);
 
-        MockHttpServletResponse response = mockMvc.perform(post("/api/login")
+        MockHttpServletResponse response = mockMvc.perform(post("/token")
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .param("username", username)
           .param("password", password)
@@ -41,6 +51,33 @@ public class AccessControllerImplIntegrationTest {
           .andExpect(status().isOk())
           .andReturn().getResponse();
 
-        assertThat(response.getContentAsString()).isEqualTo(token);
+        assertThat(response.getContentAsString()).isEqualTo(token.get());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void getUser_unauthorized() throws Exception {
+        String token = "token";
+        mockMvc.perform(post("/api/users/" + token)
+          .contentType(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    public void getUser() throws Exception {
+        String token = "token";
+        WebUser user = new WebUser("username", "password");
+        when(userService.findByToken(token)).thenReturn(Optional.of(user));
+
+        MockHttpServletResponse response = mockMvc.perform(get("/api/users/" + token)
+          .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+          .andExpect(status().isOk())
+          .andReturn().getResponse();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(user);
+        assertThat(response.getContentAsString()).isEqualTo(json);
     }
 }

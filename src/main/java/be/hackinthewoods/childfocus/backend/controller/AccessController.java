@@ -1,6 +1,10 @@
 package be.hackinthewoods.childfocus.backend.controller;
 
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
+
 public interface AccessController {
 
-    String login(String username, String password);
+    String getToken(String username, String password) throws IllegalAccessException;
+
+    WebUser getUser(String token) throws IllegalAccessException;
 }

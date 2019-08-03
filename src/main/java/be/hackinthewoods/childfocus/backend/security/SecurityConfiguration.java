@@ -1,6 +1,7 @@
 package be.hackinthewoods.childfocus.backend.security;
 
-import org.springframework.context.annotation.ComponentScan;
+import be.hackinthewoods.childfocus.backend.service.UserService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
-@ComponentScan(basePackageClasses = SecurityConfiguration.class)
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
 
                 .and().authorizeRequests()
-                .antMatchers("/api/login").permitAll()
+                .antMatchers("/token").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
@@ -59,5 +59,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(UserService userService) {
+        return new AuthenticationProvider(userService);
     }
 }

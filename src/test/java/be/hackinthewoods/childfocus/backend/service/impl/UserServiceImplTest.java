@@ -44,10 +44,10 @@ public class UserServiceImplTest {
         WebUser user = new WebUser(username, password);
         when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.of(user));
 
-        String token = service.login(username, password);
+        Optional<String> token = service.login(username, password);
 
-        assertThat(token).isNotBlank();
-        assertThat(user).extracting(WebUser::getToken).isEqualTo(token);
+        assertThat(token).isPresent();
+        assertThat(user).extracting(WebUser::getToken).isEqualTo(token.get());
     }
 
     @Test
@@ -56,8 +56,24 @@ public class UserServiceImplTest {
         String password = "password";
         when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.empty());
 
-        String token = service.login(username, password);
+        Optional<String> token = service.login(username, password);
 
         assertThat(token).isEmpty();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void findByToken_nullToken() {
+        service.findByToken(null);
+    }
+
+    @Test
+    public void findByToken() {
+        String token = "token";
+        Optional<WebUser> expectedUser = Optional.of(new WebUser("username", "password"));
+        when(userRepository.findByToken(token)).thenReturn(expectedUser);
+
+        Optional<WebUser> actualUser = service.findByToken(token);
+
+        assertThat(actualUser).isEqualTo(expectedUser);
     }
 }
