@@ -1,10 +1,10 @@
 package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.api.VolunteerNotificationController;
+import be.hackinthewoods.childfocus.backend.controller.api.NotificationController;
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.utils.MissionPayLoadConverter;
-import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import be.hackinthewoods.childfocus.backend.service.NotificationService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,13 +15,13 @@ import java.util.List;
 
 @RestController
 @Transactional
-public class VolunteerNotificationControllerImpl implements VolunteerNotificationController {
+public class NotificationControllerImpl implements NotificationController {
 
-    private final VolunteerNotificationService volunteerNotificationService;
+    private final NotificationService notificationService;
     private final BroadcastService broadcastService;
 
-    VolunteerNotificationControllerImpl(VolunteerNotificationService volunteerNotificationService, BroadcastService broadcastService) {
-        this.volunteerNotificationService = volunteerNotificationService;
+    NotificationControllerImpl(NotificationService notificationService, BroadcastService broadcastService) {
+        this.notificationService = notificationService;
         this.broadcastService = broadcastService;
     }
 
@@ -40,7 +40,7 @@ public class VolunteerNotificationControllerImpl implements VolunteerNotificatio
         Assert.notNull(missions, "The missions mustn't be null");
         Assert.isTrue(missions.stream().allMatch(m -> m.getStatus().equals(Mission.Status.PENDING)), "The missions must be pending");
 
-        volunteerNotificationService.saveMissions(missions);
+        notificationService.saveMissions(missions);
         missions.stream()
           .map(MissionPayLoadConverter::convert)
           .forEach(payLoad -> broadcastService.broadcast(payLoad, topic()));
@@ -52,7 +52,7 @@ public class VolunteerNotificationControllerImpl implements VolunteerNotificatio
         Assert.notNull(mission, "The mission mustn't be null");
         Assert.isTrue(!mission.getStatus().equals(Mission.Status.PENDING), "The mission must be accepted or refused");
 
-        volunteerNotificationService.answerMission(mission);
+        notificationService.answerMission(mission);
     }
 
     private String topic() {

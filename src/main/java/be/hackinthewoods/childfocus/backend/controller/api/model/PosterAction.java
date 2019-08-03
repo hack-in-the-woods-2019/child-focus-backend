@@ -3,26 +3,26 @@ package be.hackinthewoods.childfocus.backend.controller.api.model;
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 import org.springframework.util.Assert;
 
-public class VolunteerAction {
+public class PosterAction {
 
     private Type type;
     private Poster poster;
 
-    private VolunteerAction() {}
+    private PosterAction() {}
 
-    private VolunteerAction(Type type, Poster poster) {
+    private PosterAction(Type type, Poster poster) {
         this.type = type;
         this.poster = poster;
     }
 
-    public static VolunteerAction put(Poster poster) {
+    public static PosterAction put(Poster poster) {
         Assert.notNull(poster, "The poster mustn't be null");
-        return new VolunteerAction(Type.PUT, poster);
+        return new PosterAction(Type.PUT, poster);
     }
 
-    public static VolunteerAction remove(Poster poster) {
+    public static PosterAction remove(Poster poster) {
         Assert.notNull(poster, "The poster mustn't be null");
-        return new VolunteerAction(Type.REMOVE, poster);
+        return new PosterAction(Type.REMOVE, poster);
     }
 
     public Type getType() {

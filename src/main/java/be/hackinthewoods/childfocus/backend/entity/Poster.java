@@ -21,16 +21,8 @@ public class Poster {
     public Poster() {
     }
 
-    public Poster(List<DisplayLocation> displayLocations) {
-        this.displayLocations = displayLocations;
-    }
-
     public List<DisplayLocation> getDisplayLocations() {
         return Collections.unmodifiableList(displayLocations);
-    }
-
-    public void setDisplayLocations(List<DisplayLocation> displayLocations) {
-        this.displayLocations = displayLocations;
     }
 
     public void addDisplayLocation(DisplayLocation displayLocation) {

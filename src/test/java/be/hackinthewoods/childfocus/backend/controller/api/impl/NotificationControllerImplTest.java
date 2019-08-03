@@ -1,9 +1,9 @@
 package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.api.VolunteerNotificationController;
+import be.hackinthewoods.childfocus.backend.controller.api.NotificationController;
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
-import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import be.hackinthewoods.childfocus.backend.service.NotificationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,19 +19,19 @@ import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class VolunteerNotificationControllerImplTest {
+public class NotificationControllerImplTest {
 
-    private VolunteerNotificationController controller;
+    private NotificationController controller;
 
     @Mock
-    private VolunteerNotificationService volunteerNotificationService;
+    private NotificationService notificationService;
     @Mock
     private BroadcastService broadcastService;
 
     @Before
     public void beforeEach() {
-        controller = new VolunteerNotificationControllerImpl(
-          volunteerNotificationService,
+        controller = new NotificationControllerImpl(
+          notificationService,
           broadcastService
         );
     }
@@ -76,7 +76,7 @@ public class VolunteerNotificationControllerImplTest {
 
         controller.send(Arrays.asList(mission1, mission2));
 
-        verify(volunteerNotificationService).saveMissions(Arrays.asList(mission1, mission2));
+        verify(notificationService).saveMissions(Arrays.asList(mission1, mission2));
         verify(broadcastService).broadcast(Map.of(
           "id", "1",
           "status", "PENDING"
@@ -111,6 +111,6 @@ public class VolunteerNotificationControllerImplTest {
 
         controller.answer(mission);
 
-        verify(volunteerNotificationService).answerMission(mission);
+        verify(notificationService).answerMission(mission);
     }
 }

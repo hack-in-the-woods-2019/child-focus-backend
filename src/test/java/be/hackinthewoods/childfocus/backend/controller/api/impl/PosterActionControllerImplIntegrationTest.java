@@ -1,10 +1,10 @@
 package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.api.model.VolunteerAction;
+import be.hackinthewoods.childfocus.backend.controller.api.model.PosterAction;
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.UserService;
-import be.hackinthewoods.childfocus.backend.service.VolunteerActionService;
+import be.hackinthewoods.childfocus.backend.service.PosterActionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VolunteerActionControllerImplIntegrationTest {
+public class PosterActionControllerImplIntegrationTest {
 
     private static final String TOKEN = "token";
 
@@ -39,7 +39,7 @@ public class VolunteerActionControllerImplIntegrationTest {
     @MockBean
     private UserService userService;
     @MockBean
-    private VolunteerActionService volunteerActionService;
+    private PosterActionService posterActionService;
 
     @Before
     public void beforeEach() {
@@ -49,7 +49,7 @@ public class VolunteerActionControllerImplIntegrationTest {
     @Test
     @WithAnonymousUser
     public void action_unauthorized() throws Exception {
-        VolunteerAction action = VolunteerAction.put(new Poster());
+        PosterAction action = PosterAction.put(new Poster());
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(action);
@@ -63,7 +63,7 @@ public class VolunteerActionControllerImplIntegrationTest {
     @Test
     @WithMockUser
     public void action() throws Exception {
-        VolunteerAction action = VolunteerAction.put(new Poster());
+        PosterAction action = PosterAction.put(new Poster());
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(action);

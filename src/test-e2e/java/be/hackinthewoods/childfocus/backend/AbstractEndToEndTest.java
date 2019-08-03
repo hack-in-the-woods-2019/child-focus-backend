@@ -37,6 +37,8 @@ public abstract class AbstractEndToEndTest {
     @Before
     @Transactional
     public void beforeEach() {
+        mapper = new ObjectMapper();
+
         initUser();
     }
 

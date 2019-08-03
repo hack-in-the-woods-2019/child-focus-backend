@@ -4,7 +4,7 @@ import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.UserService;
-import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import be.hackinthewoods.childfocus.backend.service.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VolunteerNotificationControllerImplIntegrationTest {
+public class NotificationControllerImplIntegrationTest {
 
     private static final String TOKEN = "token";
 
@@ -42,7 +42,7 @@ public class VolunteerNotificationControllerImplIntegrationTest {
     @MockBean
     private UserService userService;
     @MockBean
-    private VolunteerNotificationService volunteerNotificationService;
+    private NotificationService notificationService;
     @MockBean
     private BroadcastService broadcastService;
 

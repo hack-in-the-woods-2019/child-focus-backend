@@ -4,7 +4,7 @@ import be.hackinthewoods.childfocus.backend.entity.Mission;
 
 import java.util.List;
 
-public interface VolunteerNotificationController {
+public interface NotificationController {
 
     /**
      * Subscribes clients to mission notifications

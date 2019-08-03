@@ -2,7 +2,7 @@ package be.hackinthewoods.childfocus.backend.service;
 
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 
-public interface VolunteerActionService {
+public interface PosterActionService {
 
     /**
      * A volunteer puts a poster for a missingPerson at given coordinates

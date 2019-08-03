@@ -4,7 +4,7 @@ import be.hackinthewoods.childfocus.backend.entity.Mission;
 
 import java.util.List;
 
-public interface VolunteerNotificationService {
+public interface NotificationService {
 
     /**
      * Sends missions to volunteers

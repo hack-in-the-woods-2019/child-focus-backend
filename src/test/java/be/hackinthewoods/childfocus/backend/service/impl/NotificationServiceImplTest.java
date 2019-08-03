@@ -2,8 +2,7 @@ package be.hackinthewoods.childfocus.backend.service.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.repository.MissionRepository;
-import be.hackinthewoods.childfocus.backend.service.BroadcastService;
-import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import be.hackinthewoods.childfocus.backend.service.NotificationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,23 +11,22 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class VolunteerNotificationServiceImplTest {
+public class NotificationServiceImplTest {
 
-    private VolunteerNotificationService service;
+    private NotificationService service;
 
     @Mock
     private MissionRepository missionRepository;
 
     @Before
     public void beforeEach() {
-        service = new VolunteerNotificationServiceImpl(missionRepository);
+        service = new NotificationServiceImpl(missionRepository);
     }
 
     @Test(expected = IllegalArgumentException.class)
