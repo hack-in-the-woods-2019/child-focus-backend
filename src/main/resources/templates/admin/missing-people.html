@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <th:block th:replace="fragments/css :: css"/>
+
+        <title>Child Focus - Liste des disparus</title>
+    </head>
+    <body id="page-top">
+        <div th:replace="fragments/headers :: header"></div>
+        <div id="wrapper">
+            <div th:replace="fragments/sidebar :: sidebar"></div>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/">Accueil</a>
+                        </li>
+                        <li class="breadcrumb-item active">Liste des disparus</li>
+                    </ol>
+                    <!-- Page Content -->
+                    <h1>Liste des disparus</h1>
+                    <table id="sortTable" class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" id="firstname">Prénom</th>
+                            <th scope="col" id="lastname">Nom</th>
+                            <th scope="col" id="picture">Photo</th>
+                            <th scope="col" id="action">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="missingPerson, rowStat: ${missingPeople}">
+                                <td><th:block th:text="${missingPerson.firstname}"/></td>
+                                <td><th:block th:text="${missingPerson.lastname}"/></td>
+                                <td><a class="btn btn-dark text-white" th:href="'/admin/missing-person-missions/' + ${missingPerson.id}">Liste des missions</a></td>
+                                <td>PHOTO</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div th:replace="fragments/footer :: footer"></div>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <div th:replace="fragments/elements :: page-top"></div>
+        <div th:replace="fragments/logout-modal :: logout-modal"></div>
+
+        <!-- Bootstrap and jquery -->
+        <div th:replace="fragments/bootstrap-and-jquery :: bootstrap-and-jquery"></div>
+
+    </body>
+</html>

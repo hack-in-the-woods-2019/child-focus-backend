@@ -1,0 +1,7 @@
+.drop_hover {
+    background-color: #F1F2F2;
+}
+
+.draggable {
+    cursor: grab;
+}

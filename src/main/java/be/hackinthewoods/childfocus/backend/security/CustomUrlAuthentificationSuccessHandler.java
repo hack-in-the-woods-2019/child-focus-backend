@@ -1,6 +1,8 @@
 package be.hackinthewoods.childfocus.backend.security;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -10,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 public class CustomUrlAuthentificationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -20,7 +23,7 @@ public class CustomUrlAuthentificationSuccessHandler extends SimpleUrlAuthentica
     public void onAuthenticationSuccess(
             HttpServletRequest request,
             HttpServletResponse response,
-            Authentication authentication) {
+            Authentication authentication) throws IOException {
 
         SavedRequest savedRequest
                 = requestCache.getRequest(request, response);
@@ -36,6 +39,11 @@ public class CustomUrlAuthentificationSuccessHandler extends SimpleUrlAuthentica
             requestCache.removeRequest(request, response);
             clearAuthenticationAttributes(request);
             return;
+        }
+
+        if (!savedRequest.getRedirectUrl().contains("/api/")) {
+            RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+            redirectStrategy.sendRedirect(request, response, savedRequest.getRedirectUrl());
         }
 
         clearAuthenticationAttributes(request);

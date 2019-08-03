@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
@@ -42,7 +42,7 @@ public class UserServiceImplTest {
         String username = "username";
         String password = "password";
         WebUser user = new WebUser(username, password);
-        when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmailAndPassword(username, password)).thenReturn(Optional.of(user));
 
         Optional<String> token = service.login(username, password);
 
@@ -54,7 +54,7 @@ public class UserServiceImplTest {
     public void login_userDontExist() {
         String username = "username";
         String password = "password";
-        when(userRepository.findByUsernameAndPassword(username, password)).thenReturn(Optional.empty());
+        when(userRepository.findByEmailAndPassword(username, password)).thenReturn(Optional.empty());
 
         Optional<String> token = service.login(username, password);
 

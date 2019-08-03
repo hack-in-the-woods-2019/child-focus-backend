@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    </head>
+    <body>
+        <!--Main Sidebar-->
+        <div th:fragment="sidebar">
+            <ul class="sidebar navbar-nav h-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-fw fa-home"></i>
+                        <span>Accueil</span>
+                    </a>
+                </li>
+                <span sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-fw fa-cog"></i>
+                            <span>Administration</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="settingsDropdown">
+                            <a class="dropdown-item" th:href="@{/admin/register-admin/}">Ajouter un admin</a>
+                            <a class="dropdown-item" th:href="@{/admin/register-volunteer/}">Ajouter un volontaire</a>
+                            <a class="dropdown-item" th:href="@{/admin/missing-people/}">Liste des disparus</a>
+                        </div>
+                    </li>
+                </span>
+            </ul>
+        </div>
+    </body>
+</html>

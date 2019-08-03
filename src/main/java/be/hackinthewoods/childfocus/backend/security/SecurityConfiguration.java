@@ -36,8 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("password"))
                 .roles("USER")
                 .and()
-                .withUser(passwordEncoder.encode("admin"))
-                .password("admin")
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin"))
                 .roles("USER", "ADMIN");
     }
 
@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and().authorizeRequests()
                 .antMatchers("/token").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
 
                 .and()

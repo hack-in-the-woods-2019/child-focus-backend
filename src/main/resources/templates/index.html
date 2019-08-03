@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <th:block th:replace="fragments/css :: css"/>
+
+    <title>Child Focus - Welcome</title>
+</head>
+
+<body id="page-top">
+<div th:replace="fragments/headers :: header"></div>
+<div id="wrapper">
+    <span sec:authorize="isAuthenticated()">
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+    </span>
+
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <!-- Page Content -->
+            <h1 class="text-center">Bienvenue sur le site Child Focus</h1>
+            <img th:src="@{images/logo.png}" class="img-fluid mx-auto d-block" style="opacity:0.15;" height="150px"
+                 width="150px" alt="Child Focus"/>
+            <!-- <img src="images/logo.png" class="img-fluid mx-auto d-block" style="opacity:0.15;" alt="Child Focus"/> -->
+            <hr>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<div th:replace="fragments/elements :: page-top"></div>
+<div th:replace="fragments/logout-modal :: logout-modal"></div>
+
+<!-- Bootstrap and jquery -->
+<div th:replace="fragments/bootstrap-and-jquery :: bootstrap-and-jquery"></div>
+
+</body>
+</html>
