@@ -1,15 +1,19 @@
 package be.hackinthewoods.childfocus.backend.controller.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
+import be.hackinthewoods.childfocus.backend.service.UserService;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -17,9 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,13 +34,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class VolunteerNotificationControllerImplIntegrationTest {
 
+    private static final String TOKEN = "token";
+
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
+    private UserService userService;
+    @MockBean
     private VolunteerNotificationService volunteerNotificationService;
     @MockBean
     private BroadcastService broadcastService;
+
+    @Before
+    public void beforeEach() {
+        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(new WebUser("username", "password")));
+    }
 
     @Test
     @WithAnonymousUser
@@ -55,6 +70,7 @@ public class VolunteerNotificationControllerImplIntegrationTest {
         String json = mapper.writeValueAsString(Arrays.asList("token1", "token2"));
 
         mockMvc.perform(post("/api/missions/subscribe")
+          .header(HttpHeaders.AUTHORIZATION, TOKEN)
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)
         ).andExpect(status().isOk());
@@ -95,6 +111,7 @@ public class VolunteerNotificationControllerImplIntegrationTest {
         String json = mapper.writeValueAsString(Arrays.asList(mission1, mission2));
 
         mockMvc.perform(post("/api/missions/send")
+          .header(HttpHeaders.AUTHORIZATION, TOKEN)
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)
         ).andExpect(status().isOk());
@@ -127,6 +144,7 @@ public class VolunteerNotificationControllerImplIntegrationTest {
         String json = mapper.writeValueAsString(mission);
 
         mockMvc.perform(post("/api/missions/answer")
+          .header(HttpHeaders.AUTHORIZATION, TOKEN)
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)
         ).andExpect(status().isOk());

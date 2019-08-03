@@ -6,9 +6,11 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class AuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     private final UserService userService;

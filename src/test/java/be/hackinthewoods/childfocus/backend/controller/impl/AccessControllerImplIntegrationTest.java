@@ -3,6 +3,7 @@ package be.hackinthewoods.childfocus.backend.controller.impl;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithAnonymousUser;
@@ -30,11 +32,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AccessControllerImplIntegrationTest {
 
+    private static final String TOKEN = "token";
+
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private UserService userService;
+
+    @Before
+    public void beforeEach() {
+        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(new WebUser("username", "password")));
+    }
 
     @Test
     public void getToken() throws Exception {
@@ -66,11 +75,11 @@ public class AccessControllerImplIntegrationTest {
     @Test
     @WithMockUser
     public void getUser() throws Exception {
-        String token = "token";
         WebUser user = new WebUser("username", "password");
-        when(userService.findByToken(token)).thenReturn(Optional.of(user));
+        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(user));
 
-        MockHttpServletResponse response = mockMvc.perform(get("/api/users/" + token)
+        MockHttpServletResponse response = mockMvc.perform(get("/api/users/" + TOKEN)
+          .header(HttpHeaders.AUTHORIZATION, TOKEN)
           .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
           .andExpect(status().isOk())
