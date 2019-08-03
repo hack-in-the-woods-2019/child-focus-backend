@@ -26,45 +26,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@TestPropertySource("classpath:test.properties")
-@AutoConfigureMockMvc
-public class MissionScenarii {
-
-    private ObjectMapper mapper;
-
-    private WebUser user;
-    @Autowired
-    private UserRepository userRepository;
+public class MissionScenarii extends AbstractEndToEndTest {
 
     private Mission mission;
     @Autowired
     private MissionRepository missionRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Before
-    @Transactional
     public void beforeEach() {
-        mapper = new ObjectMapper();
+        super.beforeEach();
 
-        initUser();
+        mapper = new ObjectMapper();
 
         mission = createMission(null, Mission.Status.PENDING);
         missionRepository.save(mission);
-    }
-
-    private void initUser() {
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        userRepository.findByUsername("user").ifPresentOrElse(
-          u -> user = u,
-          () -> {
-              user = new WebUser("user", passwordEncoder.encode("password"));
-              userRepository.save(user);
-          }
-        );
     }
 
     @Test
@@ -83,16 +57,6 @@ public class MissionScenarii {
         Mission answeredMission = createMission(mission.getId(), Mission.Status.REFUSED);
         answerMission(answeredMission, token);
         verifySavedMission(answeredMission);
-    }
-
-    private String login() throws Exception {
-        return mockMvc.perform(post("/token")
-          .contentType(MediaType.APPLICATION_JSON_UTF8)
-          .param("username", user.getUsername())
-          .param("password", user.getPassword())
-        )
-          .andExpect(status().isOk())
-          .andReturn().getResponse().getContentAsString();
     }
 
     private Mission createMission(Long id, Mission.Status status) {
