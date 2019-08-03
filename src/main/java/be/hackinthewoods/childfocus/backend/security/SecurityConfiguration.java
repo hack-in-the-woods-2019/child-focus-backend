@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
@@ -21,27 +23,33 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+    private static final RequestMatcher API = new OrRequestMatcher(
       new AntPathRequestMatcher("/api/**")
     );
 
+    private static final RequestMatcher ADMIN = new OrRequestMatcher(
+      new AntPathRequestMatcher("/admin/**")
+    );
+
     private AuthenticationProvider authenticationProvider;
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private CustomUrlAuthentificationSuccessHandler successHandler;
     private SimpleUrlAuthenticationFailureHandler failureHandler;
+    private UserDetailsService customUserDetailsService;
 
     public SecurityConfiguration(
-      AuthenticationProvider authenticationProvider, RestAuthenticationEntryPoint restAuthenticationEntryPoint,
-      CustomUrlAuthentificationSuccessHandler successHandler) {
+      AuthenticationProvider authenticationProvider,
+      CustomUrlAuthentificationSuccessHandler successHandler, UserDetailsService customUserDetailsService) {
         this.authenticationProvider = authenticationProvider;
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.successHandler = successHandler;
+        this.customUserDetailsService = customUserDetailsService;
         this.failureHandler = new SimpleUrlAuthenticationFailureHandler();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider)
+        .userDetailsService(customUserDetailsService)
+        .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -60,9 +68,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers(PROTECTED_URLS)
-                .authenticated()
+                .requestMatchers(ADMIN).hasRole("ADMIN")
+                .requestMatchers(API).authenticated()
 
                 .and()
                 .csrf().disable()
@@ -72,12 +79,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .httpBasic()
-                .authenticationEntryPoint(restAuthenticationEntryPoint);
+                .authenticationEntryPoint(forbiddenEntryPoint());
     }
 
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
+        final AuthenticationFilter filter = new AuthenticationFilter(API);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
