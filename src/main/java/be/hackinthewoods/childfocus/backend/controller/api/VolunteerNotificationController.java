@@ -1,4 +1,4 @@
-package be.hackinthewoods.childfocus.backend.controller;
+package be.hackinthewoods.childfocus.backend.controller.api;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 

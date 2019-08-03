@@ -1,6 +1,6 @@
-package be.hackinthewoods.childfocus.backend.controller.impl;
+package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.VolunteerNotificationController;
+import be.hackinthewoods.childfocus.backend.controller.api.VolunteerNotificationController;
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;

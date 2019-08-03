@@ -1,6 +1,6 @@
-package be.hackinthewoods.childfocus.backend.controller;
+package be.hackinthewoods.childfocus.backend.controller.api;
 
-import be.hackinthewoods.childfocus.backend.controller.model.VolunteerAction;
+import be.hackinthewoods.childfocus.backend.controller.api.model.VolunteerAction;
 
 public interface VolunteerActionController {
 

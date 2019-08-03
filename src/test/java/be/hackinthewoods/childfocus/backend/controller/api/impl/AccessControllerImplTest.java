@@ -1,6 +1,6 @@
-package be.hackinthewoods.childfocus.backend.controller.impl;
+package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.AccessController;
+import be.hackinthewoods.childfocus.backend.controller.api.AccessController;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.UserService;
 import org.junit.Before;
