@@ -3,6 +3,7 @@ package be.hackinthewoods.childfocus.backend.controller.api.impl;
 import be.hackinthewoods.childfocus.backend.controller.api.AccessController;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Transactional
 public class AccessControllerImpl implements AccessController {
 
     private final UserService userService;
@@ -29,6 +31,7 @@ public class AccessControllerImpl implements AccessController {
 
     @Override
     @GetMapping("/api/users/{token}")
+    @Transactional(readOnly = true)
     public WebUser getUser(@PathVariable String token) throws IllegalAccessException {
         Assert.hasText(token, "The token musn't be blank");
 

@@ -5,6 +5,7 @@ import be.hackinthewoods.childfocus.backend.entity.Mission;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.utils.MissionPayLoadConverter;
 import be.hackinthewoods.childfocus.backend.service.VolunteerNotificationService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Transactional
 public class VolunteerNotificationControllerImpl implements VolunteerNotificationController {
 
     private final VolunteerNotificationService volunteerNotificationService;
@@ -25,6 +27,7 @@ public class VolunteerNotificationControllerImpl implements VolunteerNotificatio
 
     @Override
     @PostMapping(path = "/api/missions/subscribe")
+    @Transactional(readOnly = true)
     public void subscribe(@RequestBody List<String> clientTokens) {
         Assert.notNull(clientTokens, "The client tokens mustn't be null");
 
