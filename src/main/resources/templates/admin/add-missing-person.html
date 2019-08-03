@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <th:block th:replace="fragments/css :: css"/>
+
+        <title>Child Focus - Liste des disparus</title>
+    </head>
+    <body id="page-top">
+        <div th:replace="fragments/headers :: header"></div>
+        <div id="wrapper">
+            <div th:replace="fragments/sidebar :: sidebar"></div>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/">Accueil</a>
+                        </li>
+                        <li class="breadcrumb-item active">Liste des disparus</li>
+                    </ol>
+                    <!-- Page Content -->
+                    <h1>Ajout d'une personne disparue</h1>
+                    <form action="#" th:action="@{/admin/add-mising-person}" method="POST" enctype="multipart/form-data">
+                        <div class="card-body mb-5">
+                            <!-- IDENTIFICATION -->
+                            <h2 class="h6">Identification</h2>
+
+                            <div class="mb-5">
+                                <div class="form-group row">
+                                    <label for="pseudonym" class="col-sm-2 col-form-label">Prénom</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" th:field="*{missingPerson.firstname}" id="pseudonym"
+                                               class="form-control w-auto"
+                                               required="required" autofocus="autofocus">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="nationalNumber" class="col-sm-2 col-form-label">Nom</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" th:field="*{missingPerson.lastname}"
+                                               id="nationalNumber" class="form-control w-auto"
+                                               required="required" autofocus="autofocus">
+                                    </div>
+                                </div>
+                                <h2 class="h6">Photo de la personne disparue</h2>
+                                <p class=" d-inline-block rounded p-1 text-primary"><i class="fas fa-info-circle"></i> la photo doit être au format PDF, JPEG ou PNG.</p>
+                                <div class="col-md-3 mb-5">
+                                    <div class="custom-file">
+                                        <input required accept="image/png, image/jpeg"
+                                               class="input-group-text mb-3" type="file" id="file-with-multi-file"
+                                               name="file-with-multi-file"
+                                               data-multiple-target="{target} files selected" multiple>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <input type="submit" value="Envoyer l'alerte" class="btn btn-danger"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div th:replace="fragments/footer :: footer"></div>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <div th:replace="fragments/elements :: page-top"></div>
+        <div th:replace="fragments/logout-modal :: logout-modal"></div>
+
+        <!-- Bootstrap and jquery -->
+        <div th:replace="fragments/bootstrap-and-jquery :: bootstrap-and-jquery"></div>
+
+    </body>
+</html>
