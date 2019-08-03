@@ -28,7 +28,7 @@ public class WebUser implements UserDetails {
 
     private String token;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -77,7 +77,7 @@ public class WebUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return Collections.unmodifiableSet(roles);
     }
 
     public String getPassword() {

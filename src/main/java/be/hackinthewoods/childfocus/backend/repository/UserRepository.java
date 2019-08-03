@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<WebUser, Long> {
 
     Optional<WebUser> findByEmail(String email);
 
-    Optional<WebUser> findByEmailAndPassword(String Email, String password);
+    Optional<WebUser> findByEmailAndPassword(String email, String password);
 
     Optional<WebUser> findByToken(String token);
 }

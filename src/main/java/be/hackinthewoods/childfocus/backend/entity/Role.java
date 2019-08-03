@@ -1,10 +1,12 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue
@@ -14,13 +16,14 @@ public class Role {
     private Set<WebUser> webUsers;
 
     @Column(nullable = false, unique = true, updatable = false)
-    private String name;
+    private String authority;
 
-    public String getName() {
-        return name;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String getAuthority() {
+        return authority;
     }
 }

@@ -1,6 +1,5 @@
 package be.hackinthewoods.childfocus.backend.service.impl;
 
-import be.hackinthewoods.childfocus.backend.entity.CustomUserDetails;
 import be.hackinthewoods.childfocus.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new CustomUserDetails(
-                userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("The username " + username + "does not exist."))
-        );
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("The username " + username + "does not exist."));
     }
 }
