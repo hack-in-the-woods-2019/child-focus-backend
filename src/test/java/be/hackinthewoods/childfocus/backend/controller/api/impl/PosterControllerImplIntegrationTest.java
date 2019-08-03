@@ -1,10 +1,9 @@
 package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
-import be.hackinthewoods.childfocus.backend.controller.api.model.PosterAction;
 import be.hackinthewoods.childfocus.backend.entity.Poster;
 import be.hackinthewoods.childfocus.backend.entity.WebUser;
+import be.hackinthewoods.childfocus.backend.service.PosterService;
 import be.hackinthewoods.childfocus.backend.service.UserService;
-import be.hackinthewoods.childfocus.backend.service.PosterActionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PosterActionControllerImplIntegrationTest {
+public class PosterControllerImplIntegrationTest {
 
     private static final String TOKEN = "token";
 
@@ -39,7 +38,7 @@ public class PosterActionControllerImplIntegrationTest {
     @MockBean
     private UserService userService;
     @MockBean
-    private PosterActionService posterActionService;
+    private PosterService posterService;
 
     @Before
     public void beforeEach() {
@@ -49,12 +48,12 @@ public class PosterActionControllerImplIntegrationTest {
     @Test
     @WithAnonymousUser
     public void action_unauthorized() throws Exception {
-        PosterAction action = PosterAction.put(new Poster());
+        Poster poster = new Poster();
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(action);
+        String json = mapper.writeValueAsString(poster);
 
-        mockMvc.perform(post("/api/actions")
+        mockMvc.perform(post("/api/posters")
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)
         ).andExpect(status().isUnauthorized());
@@ -63,12 +62,12 @@ public class PosterActionControllerImplIntegrationTest {
     @Test
     @WithMockUser
     public void action() throws Exception {
-        PosterAction action = PosterAction.put(new Poster());
+        Poster poster = new Poster();
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(action);
+        String json = mapper.writeValueAsString(poster);
 
-        mockMvc.perform(post("/api/actions")
+        mockMvc.perform(post("/api/posters")
           .header(HttpHeaders.AUTHORIZATION, TOKEN)
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)

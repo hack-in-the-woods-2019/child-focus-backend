@@ -1,9 +1,6 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,14 +8,27 @@ import java.util.Objects;
 
 @Entity
 public class Poster {
+
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(targetEntity = DisplayLocation.class)
-    private List<DisplayLocation> displayLocations = new ArrayList<>();
+    @OneToMany(
+      targetEntity = DisplayLocation.class,
+      cascade = CascadeType.ALL
+    )
+    private List<DisplayLocation> displayLocations;
 
     public Poster() {
+        displayLocations = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<DisplayLocation> getDisplayLocations() {
@@ -38,18 +48,20 @@ public class Poster {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Poster poster = (Poster) o;
-        return displayLocations.equals(poster.displayLocations);
+        return Objects.equals(id, poster.id) &&
+          displayLocations.equals(poster.displayLocations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(displayLocations);
+        return Objects.hash(id, displayLocations);
     }
 
     @Override
     public String toString() {
         return "Poster{" +
-                "displayLocations=" + displayLocations +
-                '}';
+          "id=" + id +
+          ", displayLocations=" + displayLocations +
+          '}';
     }
 }

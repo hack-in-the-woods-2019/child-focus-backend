@@ -1,9 +1,6 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,15 +9,10 @@ public class DisplayLocation {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Coordinate coordinate;
 
     public DisplayLocation() {
-    }
-
-    public DisplayLocation(Long id, Coordinate coordinate) {
-        this.id = id;
-        this.coordinate = coordinate;
     }
 
     public Long getId() {
@@ -44,8 +36,8 @@ public class DisplayLocation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DisplayLocation that = (DisplayLocation) o;
-        return id.equals(that.id) &&
-                coordinate.equals(that.coordinate);
+        return Objects.equals(id, that.id) &&
+          Objects.equals(coordinate, that.coordinate);
     }
 
     @Override
@@ -56,8 +48,8 @@ public class DisplayLocation {
     @Override
     public String toString() {
         return "DisplayLocation{" +
-                "id=" + id +
-                ", coordinate=" + coordinate +
-                '}';
+          "id=" + id +
+          ", coordinate=" + coordinate +
+          '}';
     }
 }

@@ -20,6 +20,7 @@ public class MissionScenarii extends AbstractEndToEndTest {
     @Autowired
     private MissionRepository missionRepository;
 
+    @Override
     public void beforeEach() {
         super.beforeEach();
 
