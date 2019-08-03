@@ -44,7 +44,7 @@ public abstract class AbstractEndToEndTest {
 
     protected void initUser() {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        userRepository.findByUsername("user").ifPresentOrElse(
+        userRepository.findByEmail("user").ifPresentOrElse(
           u -> user = u,
           () -> {
               user = new WebUser("user", passwordEncoder.encode("password"));
