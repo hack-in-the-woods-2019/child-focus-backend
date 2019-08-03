@@ -54,4 +54,10 @@ public class AdminController {
         model.addAttribute("missions", missions);
         return "admin/missing-person-missions";
     }
+
+    @RequestMapping(value = "/admin/add-missing-person", method = RequestMethod.GET)
+    public String missingPersonMissionsPage(Model model) {
+        model.addAttribute("missingPerson", new MissingPerson());
+        return "admin/add-missing-person";
+    }
 }
