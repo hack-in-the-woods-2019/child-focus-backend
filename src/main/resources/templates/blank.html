@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <th:block th:replace="fragments/css :: css"/>
+
+        <title>Child Focus - Blank Page</title>
+    </head>
+    <body id="page-top">
+        <div th:replace="fragments/headers :: header"></div>
+        <div id="wrapper">
+            <div th:replace="fragments/sidebar :: sidebar"></div>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/">Accueil</a>
+                        </li>
+                        <li class="breadcrumb-item active">Blank Page</li>
+                    </ol>
+                    <!-- Page Content -->
+                    <h1>Blank Page</h1>
+                    <hr>
+                    <p>This is a great starting point for new custom pages.</p>
+                </div>
+            </div>
+            <div th:replace="fragments/footer :: footer"></div>
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <div th:replace="fragments/elements :: page-top"></div>
+        <div th:replace="fragments/logout-modal :: logout-modal"></div>
+
+        <!-- Bootstrap and jquery -->
+        <div th:replace="fragments/bootstrap-and-jquery :: bootstrap-and-jquery"></div>
+
+    </body>
+</html>

@@ -16,7 +16,13 @@ public class WebUser implements UserDetails {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String phoneNumber;
 
     private String password;
 
@@ -32,8 +38,8 @@ public class WebUser implements UserDetails {
 
     private WebUser() {}
 
-    public WebUser(String username, String password) {
-        this.username = username;
+    public WebUser(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -46,7 +52,7 @@ public class WebUser implements UserDetails {
     }
 
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

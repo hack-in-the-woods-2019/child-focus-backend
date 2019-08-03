@@ -60,6 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers(PROTECTED_URLS)
                 .authenticated()
 

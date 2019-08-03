@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <th:block th:replace="fragments/css :: css"/>
+
+        <title>SB Admin - 404 Error</title>
+    </head>
+    <body id="page-top">
+        <div th:replace="fragments/headers :: header"></div>
+        <div id="wrapper">
+            <div id="content-wrapper">
+                <div class="container-fluid text-center">
+                    <h1 class="display-1"><i class="fas fa-frown-open mr-4"></i>ERROR 404</h1>
+                    <p class="lead">Page not found. You can
+                        <a href="javascript:history.back()">go back</a>
+                        to the previous page, or
+                        <a href="index">return home</a>.</p>
+                </div>
+            </div>
+            <div th:replace="fragments/footer :: footer"></div>
+        </div>
+        <div th:replace="fragments/elements :: page-top"></div>
+        <div th:replace="fragments/logout-modal :: logout-modal"></div>
+
+        <!-- Bootstrap and jquery -->
+        <div th:replace="fragments/bootstrap-and-jquery :: bootstrap-and-jquery"></div>
+
+    </body>
+</html>

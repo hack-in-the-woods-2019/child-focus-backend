@@ -3,9 +3,7 @@ package be.hackinthewoods.childfocus.backend.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,16 +12,16 @@ public class MissingPerson {
     @GeneratedValue
     private Long id;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private byte[] picture;
 
     public MissingPerson() {}
 
-    public MissingPerson(Long id, String firstName, String lastName, byte[] picture) {
+    public MissingPerson(Long id, String firstname, String lastname, byte[] picture) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.picture = picture;
     }
 
@@ -35,20 +33,20 @@ public class MissingPerson {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastName() {
-        return lastName;
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
     }
 
     public byte[] getPicture() {
@@ -65,14 +63,14 @@ public class MissingPerson {
         if (o == null || getClass() != o.getClass()) return false;
         MissingPerson that = (MissingPerson) o;
         return id.equals(that.id) &&
-                firstName.equals(that.firstName) &&
-                lastName.equals(that.lastName) &&
+                firstname.equals(that.firstname) &&
+                lastname.equals(that.lastname) &&
                 Arrays.equals(picture, that.picture);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, firstName, lastName);
+        int result = Objects.hash(id, firstname, lastname);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
     }
@@ -81,8 +79,8 @@ public class MissingPerson {
     public String toString() {
         return "MissingPerson{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", picture=" + Arrays.toString(picture) +
                 '}';
     }
