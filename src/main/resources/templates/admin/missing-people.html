@@ -39,8 +39,8 @@
                             <tr th:each="missingPerson, rowStat: ${missingPeople}">
                                 <td><th:block th:text="${missingPerson.firstname}"/></td>
                                 <td><th:block th:text="${missingPerson.lastname}"/></td>
+                                <td><a th:href="'/admin/missing-person-picture/' + ${missingPerson.id}"><img class="img-fluid img-thumbnail" style="display: block; max-width: 300px; max-height: 300px; width: auto; height: auto" th:src="'/admin/missing-person-picture/' + ${missingPerson.id}"></a></td>
                                 <td><a class="btn btn-dark text-white" th:href="'/admin/missing-person-missions/' + ${missingPerson.id}">Liste des missions</a></td>
-                                <td>PHOTO</td>
                             </tr>
                         </tbody>
                     </table>

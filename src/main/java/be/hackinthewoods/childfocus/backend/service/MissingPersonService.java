@@ -9,4 +9,6 @@ public interface MissingPersonService {
     public List<MissingPerson> findAll();
 
     public Optional<MissingPerson> findById(long id);
+
+    public void save(MissingPerson missingPerson);
 }

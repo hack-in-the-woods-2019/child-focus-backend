@@ -28,4 +28,9 @@ public class MissingPersonServiceImpl implements MissingPersonService {
     public Optional<MissingPerson> findById(long id) {
         return missingPersonRepository.findById(id);
     }
+
+    @Override
+    public void save(MissingPerson missingPerson) {
+        missingPersonRepository.save(missingPerson);
+    }
 }

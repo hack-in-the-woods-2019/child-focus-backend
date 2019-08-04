@@ -6,5 +6,7 @@ import be.hackinthewoods.childfocus.backend.entity.Mission;
 import java.util.List;
 
 public interface MissionService {
-    public List<Mission> findByMissingPerson(MissingPerson missingPerson);
+    List<Mission> findByMissingPerson(MissingPerson missingPerson);
+
+    void save(Mission mission);
 }

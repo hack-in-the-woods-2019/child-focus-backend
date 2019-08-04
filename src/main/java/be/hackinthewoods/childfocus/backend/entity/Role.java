@@ -18,6 +18,13 @@ public class Role implements GrantedAuthority {
     @Column(nullable = false, unique = true, updatable = false)
     private String authority;
 
+    public Role() {
+    }
+
+    public Role(String authority) {
+        this.authority = authority;
+    }
+
     public void setAuthority(String authority) {
         this.authority = authority;
     }
