@@ -5,6 +5,7 @@ import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.UserService;
 import be.hackinthewoods.childfocus.backend.service.NotificationService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,17 +16,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +44,7 @@ public class NotificationControllerImplIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private WebUser user;
     @MockBean
     private UserService userService;
     @MockBean
@@ -48,7 +54,8 @@ public class NotificationControllerImplIntegrationTest {
 
     @Before
     public void beforeEach() {
-        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(new WebUser("username", "password")));
+        user = new WebUser("username", "password");
+        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(user));
     }
 
     @Test
@@ -115,6 +122,42 @@ public class NotificationControllerImplIntegrationTest {
           .contentType(MediaType.APPLICATION_JSON_UTF8)
           .content(json)
         ).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void poll_unauthorized() throws Exception {
+        mockMvc.perform(get("/api/missions/poll")
+        ).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    public void poll() throws Exception {
+        Mission mission1 = new Mission();
+        mission1.setId(1L);
+        mission1.setStatus(PENDING);
+
+        Mission mission2 = new Mission();
+        mission2.setId(2L);
+        mission2.setStatus(PENDING);
+
+        when(userService.findByToken(TOKEN)).thenReturn(Optional.of(user));
+
+        List<Mission> missions = Arrays.asList(mission1, mission2);
+        when(notificationService.newMissionsFor(user)).thenReturn(missions);
+
+        MockHttpServletResponse response = mockMvc.perform(
+          get("/api/missions/poll")
+            .header(HttpHeaders.AUTHORIZATION, TOKEN)
+        )
+          .andExpect(status().isOk())
+          .andReturn().getResponse();
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Mission> actualMissions = mapper.readValue(response.getContentAsString(), new TypeReference<List<Mission>>() {});
+
+        assertThat(actualMissions).containsExactlyElementsOf(missions);
     }
 
     @Test

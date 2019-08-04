@@ -72,10 +72,10 @@ public class Mission {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Mission mission = (Mission) o;
-        return id.equals(mission.id) &&
-                webUser.equals(mission.webUser) &&
-                missingPerson.equals(mission.missingPerson) &&
-                status == mission.status;
+        return Objects.equals(id, mission.id) &&
+          Objects.equals(webUser, mission.webUser) &&
+          Objects.equals(missingPerson, mission.missingPerson) &&
+          status == mission.status;
     }
 
     @Override

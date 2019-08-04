@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,6 +42,7 @@ public class WebUser implements UserDetails {
     public WebUser(String email, String password) {
         this.email = email;
         this.password = password;
+        this.roles = new HashSet<>();
     }
 
     public WebUser(String email, String firstname, String lastname, String phoneNumber, String password, Set<Role> roles) {

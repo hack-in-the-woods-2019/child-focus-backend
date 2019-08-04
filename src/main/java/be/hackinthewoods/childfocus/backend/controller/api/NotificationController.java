@@ -2,6 +2,7 @@ package be.hackinthewoods.childfocus.backend.controller.api;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface NotificationController {
@@ -18,6 +19,12 @@ public interface NotificationController {
      * @throws IllegalArgumentException when any {@code mission} is not pending
      */
     void send(List<Mission> missions);
+
+    /**
+     * Gives new missions to volunteers
+     * @param httpServletRequest
+     */
+    List<Mission> poll(HttpServletRequest httpServletRequest);
 
     /**
      * Treats the answer of a volunteer for missing person

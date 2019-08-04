@@ -1,6 +1,7 @@
 package be.hackinthewoods.childfocus.backend.service.impl;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.repository.MissionRepository;
 import be.hackinthewoods.childfocus.backend.service.NotificationService;
 import org.junit.Before;
@@ -10,11 +11,14 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.ACCEPTED;
 import static be.hackinthewoods.childfocus.backend.entity.Mission.Status.PENDING;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NotificationServiceImplTest {
@@ -57,6 +61,23 @@ public class NotificationServiceImplTest {
         service.saveMissions(missions);
 
         verify(missionRepository).saveAll(missions);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void newMissionsFor_nullUser() {
+        service.newMissionsFor(null);
+    }
+
+    @Test
+    public void newMissionsFor() {
+        WebUser user = new WebUser("username", "password");
+        Mission mission = new Mission();
+        mission.setId(1L);
+        mission.setStatus(PENDING);
+        List<Mission> missions = Collections.singletonList(mission);
+        when(missionRepository.findByWebUser(user)).thenReturn(missions);
+
+        assertThat(service.newMissionsFor(user)).containsExactlyElementsOf(missions);
     }
 
     @Test(expected = IllegalArgumentException.class)

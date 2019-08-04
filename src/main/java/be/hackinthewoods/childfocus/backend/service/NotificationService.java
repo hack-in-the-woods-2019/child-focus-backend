@@ -1,6 +1,7 @@
 package be.hackinthewoods.childfocus.backend.service;
 
 import be.hackinthewoods.childfocus.backend.entity.Mission;
+import be.hackinthewoods.childfocus.backend.entity.WebUser;
 
 import java.util.List;
 
@@ -19,4 +20,10 @@ public interface NotificationService {
      * @throws IllegalArgumentException when {@code mission} is pending
      */
     void answerMission(Mission mission);
+
+    /**
+     * Gives the new missions for a user
+     * @throws IllegalArgumentException when {@code user} is {@code null}
+     */
+    List<Mission> newMissionsFor(WebUser user);
 }
