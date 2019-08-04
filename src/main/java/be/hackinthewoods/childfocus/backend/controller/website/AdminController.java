@@ -1,13 +1,11 @@
 package be.hackinthewoods.childfocus.backend.controller.website;
 
 import be.hackinthewoods.childfocus.backend.controller.website.model.RegisteringUser;
-import be.hackinthewoods.childfocus.backend.entity.MissingPerson;
-import be.hackinthewoods.childfocus.backend.entity.Mission;
-import be.hackinthewoods.childfocus.backend.entity.Role;
-import be.hackinthewoods.childfocus.backend.entity.WebUser;
+import be.hackinthewoods.childfocus.backend.entity.*;
 import be.hackinthewoods.childfocus.backend.repository.UserRepository;
 import be.hackinthewoods.childfocus.backend.service.MissingPersonService;
 import be.hackinthewoods.childfocus.backend.service.MissionService;
+import be.hackinthewoods.childfocus.backend.service.PickupPointService;
 import be.hackinthewoods.childfocus.backend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -34,13 +32,19 @@ public class AdminController {
     private MissingPersonService missingPersonService;
     private MissionService missionService;
     private RoleService roleService;
+    private PickupPointService pickupPointService;
     private UserRepository userRepository;
 
     @Autowired
-    public AdminController(MissingPersonService missingPersonService, MissionService missionService, RoleService roleService, UserRepository userRepository) {
+    public AdminController(MissingPersonService missingPersonService,
+                           MissionService missionService,
+                           RoleService roleService,
+                           PickupPointService pickupPointService,
+                           UserRepository userRepository) {
         this.missingPersonService = missingPersonService;
         this.missionService = missionService;
         this.roleService = roleService;
+        this.pickupPointService = pickupPointService;
         this.userRepository = userRepository;
     }
 
@@ -89,13 +93,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/add-missing-person", method = RequestMethod.GET)
-    public String missingPersonMissingPersonPage(Model model) {
+    public String addMissingPersonPage(Model model) {
         model.addAttribute("missingPerson", new MissingPerson());
         return "admin/add-missing-person";
     }
 
     @RequestMapping(value = "/admin/add-missing-person", method = RequestMethod.POST)
-    public String missingPersonMissingPersonPostPage(@ModelAttribute MissingPerson missingPerson,
+    public String addMissingPersonPostPage(@ModelAttribute MissingPerson missingPerson,
                                             MultipartHttpServletRequest multipartHttpServletRequest,
                                             BindingResult bindingResult) {
 
@@ -112,6 +116,18 @@ public class AdminController {
             missionService.save(mission);
         }
         return "redirect:/admin/missing-people";
+    }
+
+    @RequestMapping(value = "/admin/add-pickup-point", method = RequestMethod.GET)
+    public String addPickupPointPage(Model model) {
+        model.addAttribute("pickupPoint", new PickupPoint());
+        return "admin/add-pickup-point";
+    }
+
+    @RequestMapping(value = "/admin/add-pickup-point", method = RequestMethod.POST)
+    public String addPickupPointPostPage(@ModelAttribute PickupPoint pickupPoint, BindingResult bindingResult) {
+        pickupPointService.save(pickupPoint);
+        return "redirect:/";
     }
 
     @GetMapping("/admin/missing-person-missions/{id}")

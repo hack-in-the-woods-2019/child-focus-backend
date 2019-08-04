@@ -12,14 +12,16 @@ public class Coordinate {
     @GeneratedValue
     private Long id;
 
+    @Column(precision = 12, scale = 6)
     private BigDecimal latitude;
+    @Column(precision = 12, scale = 6)
     private BigDecimal longitude;
 
     @Nullable
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    private Coordinate() {}
+    public Coordinate() {}
 
     public Coordinate(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = latitude;
@@ -30,8 +32,25 @@ public class Coordinate {
         return latitude;
     }
 
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
     public BigDecimal getLongitude() {
         return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
+    @Nullable
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(@Nullable Address address) {
+        this.address = address;
     }
 
     @Override
