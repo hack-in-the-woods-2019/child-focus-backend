@@ -1,9 +1,6 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +9,7 @@ public class PickupPoint {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Coordinate coordinate;
 
     public PickupPoint() {
@@ -20,6 +17,14 @@ public class PickupPoint {
 
     public PickupPoint(Long id, Coordinate coordinate) {
         this.id = id;
+        this.coordinate = coordinate;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
 
