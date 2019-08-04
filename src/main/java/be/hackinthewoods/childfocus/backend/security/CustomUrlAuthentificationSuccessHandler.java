@@ -28,7 +28,10 @@ public class CustomUrlAuthentificationSuccessHandler extends SimpleUrlAuthentica
         SavedRequest savedRequest
                 = requestCache.getRequest(request, response);
 
+        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
         if (savedRequest == null) {
+            redirectStrategy.sendRedirect(request, response, "/");
             clearAuthenticationAttributes(request);
             return;
         }
@@ -42,7 +45,6 @@ public class CustomUrlAuthentificationSuccessHandler extends SimpleUrlAuthentica
         }
 
         if (!savedRequest.getRedirectUrl().contains("/api/")) {
-            RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
             redirectStrategy.sendRedirect(request, response, savedRequest.getRedirectUrl());
         }
 

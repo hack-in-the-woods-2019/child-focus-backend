@@ -23,4 +23,9 @@ public class MissionServiceImpl implements MissionService {
     public List<Mission> findByMissingPerson(MissingPerson missingPerson) {
         return missionRepository.findByMissingPerson(missingPerson);
     }
+
+    @Override
+    public void save(Mission mission) {
+        missionRepository.save(mission);
+    }
 }

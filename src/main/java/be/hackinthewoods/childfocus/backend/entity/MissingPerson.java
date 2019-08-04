@@ -14,6 +14,7 @@ public class MissingPerson {
 
     private String firstname;
     private String lastname;
+    private String pictureFileName;
     private byte[] picture;
 
     public MissingPerson() {}
@@ -57,6 +58,14 @@ public class MissingPerson {
         this.picture = picture;
     }
 
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
+
+    public void setPictureFileName(String pictureFileName) {
+        this.pictureFileName = pictureFileName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,12 +74,13 @@ public class MissingPerson {
         return id.equals(that.id) &&
                 firstname.equals(that.firstname) &&
                 lastname.equals(that.lastname) &&
+                pictureFileName.equals(that.pictureFileName) &&
                 Arrays.equals(picture, that.picture);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, firstname, lastname);
+        int result = Objects.hash(id, firstname, lastname, pictureFileName);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
     }
@@ -81,7 +91,7 @@ public class MissingPerson {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", picture=" + Arrays.toString(picture) +
+                ", pictureFileName='" + pictureFileName + '\'' +
                 '}';
     }
 }
