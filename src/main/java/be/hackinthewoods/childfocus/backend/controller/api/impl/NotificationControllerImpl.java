@@ -2,12 +2,10 @@ package be.hackinthewoods.childfocus.backend.controller.api.impl;
 
 import be.hackinthewoods.childfocus.backend.controller.api.NotificationController;
 import be.hackinthewoods.childfocus.backend.entity.Mission;
-import be.hackinthewoods.childfocus.backend.entity.WebUser;
 import be.hackinthewoods.childfocus.backend.service.BroadcastService;
 import be.hackinthewoods.childfocus.backend.service.UserService;
 import be.hackinthewoods.childfocus.backend.utils.MissionPayLoadConverter;
 import be.hackinthewoods.childfocus.backend.service.NotificationService;
-import com.sun.net.httpserver.HttpsParameters;
 import org.springframework.http.HttpHeaders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Transactional
@@ -59,7 +56,7 @@ public class NotificationControllerImpl implements NotificationController {
     @GetMapping(path = "/api/missions/poll")
     public List<Mission> poll(HttpServletRequest httpServletRequest) {
         return userService.findByToken(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))
-          .map(notificationService::newMissionsFor)
+          .map(notificationService::pendingMissions)
           .orElseThrow(() -> new IllegalStateException("No user matches token"));
     }
 

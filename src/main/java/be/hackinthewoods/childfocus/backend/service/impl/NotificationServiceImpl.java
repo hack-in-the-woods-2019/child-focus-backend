@@ -31,13 +31,20 @@ public class NotificationServiceImpl implements NotificationService {
         Assert.notNull(mission, "The mission mustn't be null");
         Assert.isTrue(!mission.getStatus().equals(Mission.Status.PENDING), "The mission must be accepted or refused");
 
-        missionRepository.save(mission);
+        missionRepository.findById(mission.getId())
+          .ifPresentOrElse(
+            m -> {
+                m.setStatus(mission.getStatus());
+                missionRepository.save(m);
+            },
+            () -> { throw new IllegalStateException("Missing mission"); }
+        );
     }
 
     @Override
-    public List<Mission> newMissionsFor(WebUser user) {
+    public List<Mission> pendingMissions(WebUser user) {
         Assert.notNull(user, "The user mustn't be null");
 
-        return missionRepository.findByWebUser(user);
+        return missionRepository.findByWebUserAndStatus(user, Mission.Status.PENDING);
     }
 }

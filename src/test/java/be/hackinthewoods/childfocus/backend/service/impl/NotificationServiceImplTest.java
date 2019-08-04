@@ -65,7 +65,7 @@ public class NotificationServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void newMissionsFor_nullUser() {
-        service.newMissionsFor(null);
+        service.pendingMissions(null);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class NotificationServiceImplTest {
         List<Mission> missions = Collections.singletonList(mission);
         when(missionRepository.findByWebUser(user)).thenReturn(missions);
 
-        assertThat(service.newMissionsFor(user)).containsExactlyElementsOf(missions);
+        assertThat(service.pendingMissions(user)).containsExactlyElementsOf(missions);
     }
 
     @Test(expected = IllegalArgumentException.class)

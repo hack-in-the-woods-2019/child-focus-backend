@@ -12,4 +12,6 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findByMissingPerson(MissingPerson missingPerson);
 
     List<Mission> findByWebUser(WebUser user);
+
+    List<Mission> findByWebUserAndStatus(WebUser user, Mission.Status pending);
 }

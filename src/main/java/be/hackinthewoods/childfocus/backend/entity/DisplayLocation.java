@@ -1,5 +1,7 @@
 package be.hackinthewoods.childfocus.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -8,6 +10,10 @@ public class DisplayLocation {
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Poster poster;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Coordinate coordinate;
@@ -51,5 +57,9 @@ public class DisplayLocation {
           "id=" + id +
           ", coordinate=" + coordinate +
           '}';
+    }
+
+    public Poster getPoster() {
+        return poster;
     }
 }

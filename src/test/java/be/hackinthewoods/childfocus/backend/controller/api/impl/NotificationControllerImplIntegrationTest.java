@@ -145,7 +145,7 @@ public class NotificationControllerImplIntegrationTest {
         when(userService.findByToken(TOKEN)).thenReturn(Optional.of(user));
 
         List<Mission> missions = Arrays.asList(mission1, mission2);
-        when(notificationService.newMissionsFor(user)).thenReturn(missions);
+        when(notificationService.pendingMissions(user)).thenReturn(missions);
 
         MockHttpServletResponse response = mockMvc.perform(
           get("/api/missions/poll")

@@ -13,9 +13,12 @@ public class Poster {
     @GeneratedValue
     private Long id;
 
+    @OneToOne
+    private MissingPerson missingPerson;
+
     @OneToMany(
       targetEntity = DisplayLocation.class,
-      cascade = CascadeType.ALL
+      mappedBy = "poster"
     )
     private List<DisplayLocation> displayLocations;
 
@@ -43,18 +46,27 @@ public class Poster {
         displayLocations.removeIf(location -> location.equals(displayLocation));
     }
 
+    public MissingPerson getMissingPerson() {
+        return missingPerson;
+    }
+
+    public void setMissingPerson(MissingPerson missingPerson) {
+        this.missingPerson = missingPerson;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Poster poster = (Poster) o;
         return Objects.equals(id, poster.id) &&
+          Objects.equals(missingPerson, poster.missingPerson) &&
           displayLocations.equals(poster.displayLocations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, displayLocations);
+        return Objects.hash(id, missingPerson, displayLocations);
     }
 
     @Override

@@ -116,7 +116,7 @@ public class NotificationControllerImplTest {
         mission.setId(1L);
         mission.setStatus(PENDING);
         List<Mission> missions = Collections.singletonList(mission);
-        when(notificationService.newMissionsFor(user)).thenReturn(missions);
+        when(notificationService.pendingMissions(user)).thenReturn(missions);
 
         MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
         httpServletRequest.addHeader(HttpHeaders.AUTHORIZATION, "token");

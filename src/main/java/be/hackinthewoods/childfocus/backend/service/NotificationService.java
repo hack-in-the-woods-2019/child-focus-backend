@@ -24,6 +24,7 @@ public interface NotificationService {
     /**
      * Gives the new missions for a user
      * @throws IllegalArgumentException when {@code user} is {@code null}
+     * @param user
      */
-    List<Mission> newMissionsFor(WebUser user);
+    List<Mission> pendingMissions(WebUser user);
 }

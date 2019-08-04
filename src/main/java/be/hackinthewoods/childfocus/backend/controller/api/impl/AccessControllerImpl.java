@@ -26,7 +26,8 @@ public class AccessControllerImpl implements AccessController {
         Assert.hasText(username, "The username musn't be blank");
         Assert.hasText(password, "The password musn't be blank");
 
-        return userService.login(username, password).orElseThrow(() -> new IllegalAccessException("Username or password doesn't match"));
+        return userService.login(username, password)
+          .orElseThrow(() -> new IllegalAccessException("Username or password doesn't match"));
     }
 
     @Override

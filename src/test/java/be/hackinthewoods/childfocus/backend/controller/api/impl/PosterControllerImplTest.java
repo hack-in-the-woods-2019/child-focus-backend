@@ -22,7 +22,7 @@ public class PosterControllerImplTest {
 
     @Before
     public void beforeEach() {
-        controller = new PosterControllerImpl(service);
+        controller = new PosterControllerImpl(service, null, userService);
     }
 
     @Test(expected = IllegalArgumentException.class)
