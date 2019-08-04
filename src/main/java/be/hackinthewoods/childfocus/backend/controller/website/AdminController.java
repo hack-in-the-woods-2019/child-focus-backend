@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -167,6 +168,22 @@ public class AdminController {
             default: throw new IllegalStateException("File extention ." + fileExtension + " not supported.");
         }
         return new ResponseEntity<>(missingPerson.getPicture(), responseHeader, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/admin/display-posters-map/{id}")
+    public String getMissingPersonPostersMapPage(Model model, @PathVariable("id") long id) {
+        MissingPerson missingPerson =
+                missingPersonService.findById(id).orElseThrow(
+                        () -> new IllegalArgumentException("The evidence of id " + id + " doesn't exist.")
+                );
+
+        List<DisplayLocation> displayLocations = new ArrayList<>();
+        Poster poster = missingPerson.getPoster();
+        if (poster != null) {
+            displayLocations = poster.getDisplayLocations();
+        }
+        model.addAttribute("displayLocations", displayLocations);
+        return "admin/display-posters-map";
     }
 
     private void addPictureToMissingPerson(MissingPerson missingPerson, MultipartHttpServletRequest multipartHttpServletRequest) {

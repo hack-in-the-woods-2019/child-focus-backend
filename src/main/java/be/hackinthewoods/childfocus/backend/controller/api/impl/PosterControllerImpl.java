@@ -22,12 +22,12 @@ public class PosterControllerImpl implements PosterController {
 
     private final PosterService posterService;
     private final PosterRepository posterRepository;
-    private final UserRepository userService;
+    private final UserRepository userRepository;
 
-    PosterControllerImpl(PosterService posterService, PosterRepository posterRepository, UserRepository userService) {
+    PosterControllerImpl(PosterService posterService, PosterRepository posterRepository, UserRepository userRepository) {
         this.posterService = posterService;
         this.posterRepository = posterRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PosterControllerImpl implements PosterController {
     @Override
     @GetMapping(path = "/api/posters/byuser")
     public List<Poster> userPosters(HttpServletRequest httpServletRequest) {
-        return userService.findByToken(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))
+        return userRepository.findByToken(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))
           .map(posterRepository::findAllByUser)
           .orElseThrow(() -> new IllegalStateException("User not found"));
     }

@@ -3,6 +3,7 @@ package be.hackinthewoods.childfocus.backend.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -11,6 +12,9 @@ public class MissingPerson {
     @Id
     @GeneratedValue
     private Long id;
+
+    @OneToOne(mappedBy ="missingPerson")
+    private Poster poster;
 
     private String firstname;
     private String lastname;
@@ -64,6 +68,14 @@ public class MissingPerson {
 
     public void setPictureFileName(String pictureFileName) {
         this.pictureFileName = pictureFileName;
+    }
+
+    public Poster getPoster() {
+        return poster;
+    }
+
+    public void setPoster(Poster poster) {
+        this.poster = poster;
     }
 
     @Override

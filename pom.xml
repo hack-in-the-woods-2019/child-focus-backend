@@ -56,6 +56,11 @@
             <artifactId>firebase-admin</artifactId>
             <version>6.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.maps</groupId>
+            <artifactId>google-maps-services</artifactId>
+            <version>0.9.3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>
